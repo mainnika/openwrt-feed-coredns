@@ -2,9 +2,13 @@
 
 This is an openwrt feed that contains definitions to include CoreDNS software into your OpenWRT build.
 
-## how to add the feed into your build
+## install from a binary
 
-> see for details: https://openwrt.org/docs/guide-developer/feeds
+1. download an ipk file from the releases page https://code.tokarch.uk/mainnika/openwrt-feed-coredns/releases
+2. put the file to the device, e.g. path `/tmp/coredns.ipk`
+2. use opkg to install the downloaded file, e.g. `opkg install /tmp/coredns.ipk`
+
+## how to add the feed into your build
 
 1. open your feeds.conf.default and add the following line:
 
@@ -17,6 +21,8 @@ This is an openwrt feed that contains definitions to include CoreDNS software in
 3. install coredns packages into your build:
 
    `./scripts/feeds install -a -p feed_coredns`
+
+> see for details: https://openwrt.org/docs/guide-developer/feeds
 
 ## service init
 
