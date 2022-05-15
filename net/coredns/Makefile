@@ -42,7 +42,7 @@ define Package/coredns/install
 	$(INSTALL_BIN) ./files/coredns.init $(1)/etc/init.d/coredns
 
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/coredns.config $(1)/etc/config/coredns
+	$(INSTALL_CONF) ./files/coredns.conf $(1)/etc/config/coredns
 
 	$(INSTALL_DIR) $(1)/etc/coredns
 	$(INSTALL_CONF) ./files/Corefile $(1)/etc/coredns/Corefile
