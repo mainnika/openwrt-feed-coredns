@@ -1,0 +1,30 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2022 Nikita Tokarchuk
+
+START=90
+
+USE_PROCD=1
+
+NAME=coredns
+COMMAND=/usr/sbin/$NAME
+
+start_service() {
+  config_load $NAME
+
+  config_get port main port '53'
+  config_get config main config '/etc/coredns/Corefile'
+
+  procd_open_instance
+  procd_set_param command $COMMAND
+  procd_append_param command \
+    -p $port \
+    -conf $config
+  procd_set_param limits nofile=4096
+  procd_set_param stderr 1
+  procd_set_param stdout 1
+  procd_close_instance
+}
+
+reload_service() {
+  procd_send_signal $NAME
+}

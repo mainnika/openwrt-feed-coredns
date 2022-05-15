@@ -38,6 +38,12 @@ define Package/coredns/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/coredns $(1)/usr/sbin/
 
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/coredns.init $(1)/etc/init.d/coredns
+
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./files/coredns.config $(1)/etc/config/coredns
+
 	$(INSTALL_DIR) $(1)/etc/coredns
 	$(INSTALL_CONF) ./files/Corefile $(1)/etc/coredns/Corefile
 endef
