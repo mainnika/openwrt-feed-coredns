@@ -4,9 +4,15 @@ This is an openwrt feed that contains definitions to include CoreDNS software in
 
 ## install from a binary
 
+### by using terminal
 1. download an ipk file from the releases page https://code.tokarch.uk/mainnika/openwrt-feed-coredns/releases
-2. put the file to the device, e.g. path `/tmp/coredns.ipk`
+2. put the file to the device, e.g. path `/tmp/coredns.ipk` use scp -- `scp coredns_1.8.6-1_arm_cortex-a7_neon-vfpv4.ipk root@[openwrt-ip]:/tmp/coredns.ipk`
 2. use opkg to install the downloaded file, e.g. `opkg install /tmp/coredns.ipk`
+
+### by using luci
+1. download an ipk file from the releases page https://code.tokarch.uk/mainnika/openwrt-feed-coredns/releases
+2. open luci admin gui and go `System` → `Software`
+3. use `Upload Package` buttom to upload local release file 
 
 ## how to add the feed into your build
 
@@ -49,3 +55,23 @@ The empty `Corefile`:
 . { }
 ```
 
+To configure the coredns instance properly set Corefile with your content.
+
+## use cases
+
+### openwrt hardware as the external dns resolver
+
+> I assume that in this setup openwrt act as a dhcp client (not a server).
+> You can set lan network as a dhcp client by using these uci values (use `uci commit` to apply):
+> ```
+> uci del network.lan.ipaddr
+> uci del network.lan.netmask
+> uci del network.lan.ip6assign
+> uci set network.lan.proto='dhcp'
+> ```
+
+the main goal is to replace `dnsmasq` with `coredns` because they share the same port `53`.
+
+1. go `System` → `Startup`, disable and stop `dnsmasq`
+2. enable and start `coredns`
+3. now coredns acts as a default resolver and listen all interfaces by default.
